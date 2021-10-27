@@ -7,10 +7,22 @@
 <body>
 <h2>---商品详情---</h2>
 商品名称：<span th:text="${commodity.commname}"></span><br/>
+<img th:src="${commodity.image}"/><br/>
+商品描述：<span th:text="${commodity.commdesc}"></span><br/>
+商品价格：<span th:text="${commodity.price}"></span><br/>
 <h2>其他字段根据需求接着加</h2>
-商品拥有者：<span th:text="${commodityOwner.lastName}"></span><br/>
-联系方式：<span th:text="${commodityOwner.mobilephone}"></span><br/>
-<h2>其他字段根据需求接着加</h2>
+
+<div th:if="${showContactOrNot} eq 0"><br/>
+    <h2>用户未登录，无法查看卖家信息</h2>
+</div>
+<!--只有用户登录了才能看到卖家信息-->
+<div th:if="${showContactOrNot} eq 1">
+    <h2>---卖家信息---</h2>
+    卖家：<span th:text="${commodityOwner.lastName}"></span><br/>
+    联系方式：<span th:text="${commodityOwner.mobilephone}"></span><br/>
+    <h2>其他字段根据需求接着加</h2>
+</div>
+
 
 <!--商品收藏功能 首先得判断用户是否登录以及用户是否收藏了该商品。
 如果用户没登录，点击收藏按钮，自动跳转到登录页面；
