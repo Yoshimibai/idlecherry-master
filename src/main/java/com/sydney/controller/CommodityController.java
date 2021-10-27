@@ -50,8 +50,10 @@ public class CommodityController {
 
     @RequestMapping(value = "/CommodityDetail")
     /*
-    开发思路：商品主页面有很多商品，每个商品都有一个对应的超链接，点了这个超链接后
-    根据商品id查找该商品的所有详细信息，跳转页面，展示到CommodityDetail.html中
+    Development idea: There are many commodities on the main page,
+    and each commodity has a corresponding hyperlink. After clicking the hyperlink,
+    find all the detailed information of the commodity according to the commodityID,
+    jump to the page, and display it in CommodityDetail.html
      */
     public String showCommodityDetail(Model model, HttpSession session, Integer id) {
 
@@ -80,13 +82,17 @@ public class CommodityController {
 
         //0显示收藏 1显示已收藏
         Integer showFavoriteButtonOrNot;
+        //0不显示卖家联系方式 1显示卖家联系方式
+        Integer showContactOrNot;
         /*
         判断用户是否登录，即使未登录，也会显示收藏按钮
         若登录，判断用户是否已经收藏了该商品
+        如果用户未登录，不显示卖家联系方式；卖家登录才显示卖家联系方式
          */
         User user = (User) session.getAttribute("user");
         if(user == null){
             showFavoriteButtonOrNot = 0;
+            showContactOrNot = 0;
         }else{
             UserCollection userCollection = userCollectionService.selectByCommIDandUserID(commodity.getCommid(), user.getId());
             if(userCollection == null){
@@ -94,21 +100,25 @@ public class CommodityController {
             }else {
                 showFavoriteButtonOrNot = 1;
             }
+            showContactOrNot = 1;
         }
         model.addAttribute("showFavoriteButtonOrNot", showFavoriteButtonOrNot);
+        model.addAttribute("showContactOrNot", showContactOrNot);
 
         return "CommodityDetail";
     }
 
     @RequestMapping(value = "/FavoriteCommodity")
     /*
-    商品详情页面进行商品收藏
-    商品收藏功能 首先得判断用户是否登录以及用户是否收藏了该商品。
-    如果用户没登录，点击收藏按钮，自动跳转到登录页面；
-    如果用户登录且没收藏该商品，点击收藏按钮可收藏，并且把收藏变成已收藏；
-    如果如果用户登录且已经收藏该商品，显示已收藏
+    Commodity collection on the product detail page. Determine whether the user is
+    logged in and whether the user has bookmarked the product.
+    If the user is not logged in, click the favorite button to automatically jump to the login page;
+    if the user is logged in and did not favorite the product, click the favorite button
+    to favorite and turn the favorite into a favorite;
+    if the user is logged in and already favorite the product, it will display collected.
      */
-    public String favoriteCommodity(Model model, HttpSession session, Integer commid) {
+    public String favoriteCommodity(Model model, HttpSession session, Integer commid)
+    {
 
         User user = (User) session.getAttribute("user");
         //如果用户未登录 自动跳转到登录页面
@@ -133,17 +143,7 @@ public class CommodityController {
         userCollection.setCollectiontime(currentTime);
         userCollectionService.insertSelective(userCollection);
 
-        model.addAttribute("commodity", commodity);
-        User commodityOwner = userService.getUserById(commodity.getUserid());
-        model.addAttribute("commodityOwner", commodityOwner);
-        List<CommodityComment> commentList = commodityCommentService.selectCommentsByCommID(commodity.getCommid());
-        model.addAttribute("commentList", commentList);
 
-        /*
-        执行到这一步，用户肯定是收藏了该商品的
-         */
-        Integer showFavoriteButtonOrNot = 1;
-        model.addAttribute("showFavoriteButtonOrNot", showFavoriteButtonOrNot);
 
         return "redirect:/CommodityDetail?id=" + commid;
     }
@@ -185,34 +185,18 @@ public class CommodityController {
         commodityCommentService.insertSelective(commodityComment);
 
         Commodity commodity = commodityService.queryCommodityByID(commid);
-        model.addAttribute("commodity", commodity);
-        User commodityOwner = userService.getUserById(commodity.getUserid());
-        model.addAttribute("commodityOwner", commodityOwner);
-        List<CommodityComment> commentList = commodityCommentService.selectCommentsByCommID(commodity.getCommid());
-        model.addAttribute("commentList", commentList);
 
-        //0显示收藏 1显示已收藏
-        Integer showFavoriteButtonOrNot;
-        UserCollection userCollection = userCollectionService.selectByCommIDandUserID(commodity.getCommid(), user.getId());
-        if(userCollection == null){
-            showFavoriteButtonOrNot = 0;
-        }else {
-            showFavoriteButtonOrNot = 1;
-        }
-        model.addAttribute("showFavoriteButtonOrNot", showFavoriteButtonOrNot);
 
-        //向商品拥有者发送通知：商品被评论
+        //Send a notification to the seller: the commodity is reviewed
         Notice notice = new Notice();
         notice.setNoticetypeid(1);
         notice.setUserid(commodity.getUserid());
         notice.setNoticetime(currentTime);
-        String noticeContent = "您的商品" + commodity.getCommname() + "已被评论！快去看看吧";
+        String noticeContent = "Your commodity" + commodity.getCommname()
+                + "is reviewed！Please check that!";
         notice.setNoticecontent(noticeContent);
         noticeService.insertSelective(notice);
-
         return "redirect:/CommodityDetail?id=" + commid;
     }
-
-
-
 }
+
