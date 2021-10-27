@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Collection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="../../static/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/layui/css/layui.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/userInfo.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/index.css}">
+
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header" style="background-color:transparent">
+            <header style="height: 60px">
+                <a th:href="@{/index}">idlecherry</a >
+                <nav>
+                    <ul class="nav_links">
+                        <li><a th:href="@{/index}">Home</a ></li>
+                        <li><a th:href="@{/commodities}">Goods</a ></li>
+                        <li><a th:href="@{/contact}">Contact</a ></li>
+                    </ul>
+                </nav>
+                <div class="btn-area">
+                    <a th:href="@{/user/usercenter}">User Center</a >
+                    <a th:href="@{/user/logout}">Log out</a >
+                </div>
+            </header>
+        </div>
+
+    <div class="layui-side bg-pink">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item">
+                    <a th:href="@{/index}">Index</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a th:href="@{/user/usercenter}">Account setting</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a th:href="@{/user/releaseNew}">Release New Idle</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a th:href="@{/user/commodityManage}">Manage my goods</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href=""> My Favorite Commodities</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a th:href="@{/user/Notice}">Message Management</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!--        main section-->
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Collect Time</th>
+                <th>Price</th>
+                <th>Check</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="collection:${myCollection}">
+                <td th:text="${collection.getCommname()}"></td>
+                <td th:text="${collection.getCollectiontime()}"></td>
+                <td th:text="${collection.getPrice()}"></td>
+                <td>
+                    <a class="layui-btn layui-btn-sm layui-btn-normal" th:href="@{/CommodityDetail?id=} + ${collection.getCommid()}">
+                        Check it out
+                    </a>
+                </td>
+
+                <td>
+                        <a class="layui-btn layui-btn-sm layui-btn-warm" th:href="@{/user/deleteCollection/} + ${collection.getCommid()}"  >Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+</body>
+</html>

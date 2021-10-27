@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sydney.dao.UserCollectionMapper">
+  <resultMap id="BaseResultMap" type="com.sydney.entity.UserCollection">
+    <id column="collectionID" jdbcType="INTEGER" property="collectionid" />
+    <result column="commID" jdbcType="INTEGER" property="commid" />
+    <result column="userID" jdbcType="INTEGER" property="userid" />
+    <result column="commName" jdbcType="VARCHAR" property="commname" />
+    <result column="commDesc" jdbcType="VARCHAR" property="commdesc" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="collectionTime" jdbcType="VARCHAR" property="collectiontime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    collectionID, commID, userID, commName, commDesc, price, collectionTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_collection
+    where collectionID = #{collectionid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_collection
+    where collectionID = #{collectionid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sydney.entity.UserCollection">
+    insert into user_collection (collectionID, commID, userID, 
+      commName, commDesc, price, 
+      collectionTime)
+    values (#{collectionid,jdbcType=INTEGER}, #{commid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{commname,jdbcType=VARCHAR}, #{commdesc,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{collectiontime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sydney.entity.UserCollection">
+    insert into user_collection
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="collectionid != null">
+        collectionID,
+      </if>
+      <if test="commid != null">
+        commID,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="commname != null">
+        commName,
+      </if>
+      <if test="commdesc != null">
+        commDesc,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="collectiontime != null">
+        collectionTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="collectionid != null">
+        #{collectionid,jdbcType=INTEGER},
+      </if>
+      <if test="commid != null">
+        #{commid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="commname != null">
+        #{commname,jdbcType=VARCHAR},
+      </if>
+      <if test="commdesc != null">
+        #{commdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="collectiontime != null">
+        #{collectiontime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sydney.entity.UserCollection">
+    update user_collection
+    <set>
+      <if test="commid != null">
+        commID = #{commid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="commname != null">
+        commName = #{commname,jdbcType=VARCHAR},
+      </if>
+      <if test="commdesc != null">
+        commDesc = #{commdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="collectiontime != null">
+        collectionTime = #{collectiontime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where collectionID = #{collectionid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sydney.entity.UserCollection">
+    update user_collection
+    set commID = #{commid,jdbcType=INTEGER},
+      userID = #{userid,jdbcType=INTEGER},
+      commName = #{commname,jdbcType=VARCHAR},
+      commDesc = #{commdesc,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      collectionTime = #{collectiontime,jdbcType=VARCHAR}
+    where collectionID = #{collectionid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from user_collection where userID = #{userid}
+  </select>
+
+
+  <!--新增的  -->
+  <select id="selectByCommIDandUserID" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_collection
+    where commID = #{commid,jdbcType=INTEGER} and userID = #{userid,jdbcType=INTEGER}
+  </select>
+
+<!--根据商品id和Userid删除记录-->
+  <delete id="deleteByCommIDandUserID" parameterType="java.lang.Integer">
+    delete from user_collection
+    where commID = #{commid,jdbcType=INTEGER} and userID = #{userid,jdbcType=INTEGER}
+  </delete>
+
+</mapper>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>UserCenter</title>
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="../../static/layui/css/layui.css">
+
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/layui/css/layui.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/userInfo.css}">
+
+</head>
+<body>
+成功！！！！！！！！！
+
+
+<div class="myForm">
+    <form class="layui-form" th:action="@{/user/updateCommodity}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="commid" th:value="${commodity.getCommid()}">
+        <input type="hidden" name="userid" th:value="${commodity.getUserid()}">
+        <input type="hidden" name="commstatus" th:value="${commodity.getCommstatus()}">
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品名称</label>
+            <div class="layui-input-block">
+                <input class="layui-input" type="text" name="commname" lay-verify="required" th:value="${commodity.getCommname()}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品类别</label>
+            <div class="layui-input-block">
+                <input class="layui-input" type="text" readonly="readonly" name="categoryid" lay-verify="required" th:value="${commodity.getCategoryid()}">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">Expected price</label>
+            <div class="layui-input-block">
+                <input class="layui-input" type="text" name="price" lay-verify="required" th:value="${commodity.getPrice()}">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">Description</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" name="commdesc" th:text="${commodity.getCommdesc()}"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" type="submit" lay-submit>提交修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

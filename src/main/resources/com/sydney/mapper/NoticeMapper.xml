@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sydney.dao.NoticeMapper">
+  <resultMap id="BaseResultMap" type="com.sydney.entity.Notice">
+    <id column="noticeID" jdbcType="INTEGER" property="noticeid" />
+    <result column="noticeTypeID" jdbcType="INTEGER" property="noticetypeid" />
+    <result column="userID" jdbcType="INTEGER" property="userid" />
+    <result column="noticeTime" jdbcType="VARCHAR" property="noticetime" />
+    <result column="noticeContent" jdbcType="VARCHAR" property="noticecontent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    noticeID, noticeTypeID, userID, noticeTime, noticeContent
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from notice
+    where noticeID = #{noticeid,jdbcType=INTEGER}
+  </select>
+  <!--新加的-->
+  <select id="selectByUserID" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from notice
+    where userID = #{userid,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from notice
+    where noticeID = #{noticeid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sydney.entity.Notice">
+    insert into notice (noticeID, noticeTypeID, userID,
+                        noticeTime, noticeContent)
+    values (#{noticeid,jdbcType=INTEGER}, #{noticetypeid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER},
+            #{noticetime,jdbcType=VARCHAR}, #{noticecontent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sydney.entity.Notice">
+    insert into notice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="noticeid != null">
+        noticeID,
+      </if>
+      <if test="noticetypeid != null">
+        noticeTypeID,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="noticetime != null">
+        noticeTime,
+      </if>
+      <if test="noticecontent != null">
+        noticeContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="noticeid != null">
+        #{noticeid,jdbcType=INTEGER},
+      </if>
+      <if test="noticetypeid != null">
+        #{noticetypeid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="noticetime != null">
+        #{noticetime,jdbcType=VARCHAR},
+      </if>
+      <if test="noticecontent != null">
+        #{noticecontent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sydney.entity.Notice">
+    update notice
+    <set>
+      <if test="noticetypeid != null">
+        noticeTypeID = #{noticetypeid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="noticetime != null">
+        noticeTime = #{noticetime,jdbcType=VARCHAR},
+      </if>
+      <if test="noticecontent != null">
+        noticeContent = #{noticecontent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where noticeID = #{noticeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sydney.entity.Notice">
+    update notice
+    set noticeTypeID = #{noticetypeid,jdbcType=INTEGER},
+        userID = #{userid,jdbcType=INTEGER},
+        noticeTime = #{noticetime,jdbcType=VARCHAR},
+        noticeContent = #{noticecontent,jdbcType=VARCHAR}
+    where noticeID = #{noticeid,jdbcType=INTEGER}
+  </update>
+</mapper>

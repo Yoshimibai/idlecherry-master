@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>All Goods</title>
+	<link rel="stylesheet" type="text/css" th:href="@{static/css/goods.css}">
+	<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+	/>
+</head>
+	<body>
+		<div id="main-page">
+			<header>
+				<a th:href="@{/index}">idlecherry</a>
+				<nav>
+					<ul class="nav_links">
+						<li><a th:href="@{/index}">Home</a></li>
+						<li><a th:href="@{/commodities}">Goods</a></li>
+						<li><a th:href="@{/contact}">Contact</a></li>
+					</ul>
+				</nav>
+				<div class="btn-area">
+					<a th:href="@{/user/usercenter}">User Center</a>
+					<a th:href="@{/user/logout}">Log out</a>
+				</div>
+			</header>
+
+			<!--搜索框-->
+			<div>
+            <span>
+                <form class="search" th:action="@{/search}">
+                    <input type="text " placeholder="search what you want" name="searchContent">
+                    <div class="search1">
+                        <button type="submit">Search</button>
+                    </div>
+                </form>
+            </span>
+			</div>
+
+			<section class="category">
+				<ul>
+					<li class="category-list">
+						<a th:href="@{/commodities}">All</a>
+					</li>
+					<li class="category-list">
+						<a th:href="@{/commodity/clothes}">Clothes</a>
+					</li>
+					<li class="category-list">
+						<a th:href="@{/commodity/books}">Books</a>
+					</li>
+					<li class="category-list">
+						<a th:href="@{/commodity/homeApplicance}">Home Appliances</a>
+					</li>
+					<li class="category-list">
+						<a th:href="@{/commodity/electronics}">Electronics</a>
+					</li>
+					<li class="category-list">
+						<a th:href="@{/commodity/sports}">Sports</a>
+					</li>
+					<li class="category-list">
+						<a th:href="@{/commodity/healthyBeauty}">Health & Beauty</a>
+					</li>
+					<li class="category-list">
+						<a th:href="@{/commodity/entertainment}">Entertainment</a>
+					</li>
+					<li class="category-list">
+						<a th:href="@{/commodity/others}">Others</a>
+					</li>
+				</ul>
+			</section>
+
+			<div th:each="commodity: ${commodities}">
+				<a th:href="@{/CommodityDetail?id=} + ${commodity.getCommid()}">
+					<img th:src="${commodity.getImage()}">
+				</a>
+				Commodity name：<span th:text="${commodity.getCommname()}"></span>
+				Commodity price：<span th:text="${commodity.getPrice()}"></span><br/>
+				<!--Release time：<span th:text="${commodity.getUpdatetime()}"></span>-->
+			</div>
+
+			<!--//分页器-->
+			<div>
+				<a th:href="${requestPath}+'pageNumber=1'">First page</a>
+				<a th:href="${requestPath}+'pageNumber='+${pageInfo.prePage}">
+					<
+				</a>
+				<span>[[${pageInfo.pageNum}]]/[[${pageInfo.pages}]]</span>
+				<a th:href="${requestPath}+'pageNumber='+${pageInfo.nextPage}">
+					>
+				</a>
+				<a th:href="${requestPath}+'pageNumber='+${pageInfo.pages}">Last page</a>
+			</div>
+
+		</div>
+	</body>
+</html>

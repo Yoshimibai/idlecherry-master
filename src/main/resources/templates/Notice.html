@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>UserCenter</title>
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="../../static/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/layui/css/layui.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/userInfo.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/index.css}">
+
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+
+<div class="layui-header" style="background-color:transparent">
+    <header style="height: 60px">
+        <a th:href="@{/index}">idlecherry</a >
+        <nav>
+            <ul class="nav_links">
+                <li><a th:href="@{/index}">Home</a ></li>
+                <li><a th:href="@{/commodities}">Goods</a ></li>
+                <li><a th:href="@{/contact}">Contact</a ></li>
+            </ul>
+        </nav>
+        <div class="btn-area">
+            <a th:href="@{/user/usercenter}">User Center</a >
+            <a th:href="@{/user/logout}">Log out</a >
+        </div>
+    </header>
+</div>
+
+<div class="layui-side bg-pink">
+    <div class="layui-side-scroll">
+        <!-- 左侧导航区域（配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <li class="layui-nav-item">
+                <a th:href="@{/index}">Index</a>
+            </li>
+            <li class="layui-nav-item">
+                <a th:href="@{/user/usercenter}">Account setting</a>
+            </li>
+            <li class="layui-nav-item">
+                <a th:href="@{/user/releaseNew}">Release New Idle</a>
+            </li>
+            <li class="layui-nav-item">
+                <a th:href="@{/user/commodityManage}">Manage my goods</a>
+            </li>
+            <li class="layui-nav-item">
+                <a th:href="@{/user/collectionManage}">My Favorite Commodities</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="">Message Management</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="layui-body">
+    <h2>通知中心</h2>
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>Notice Type</th>
+            <th>Notice Content</th>
+            <th>Notice Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="notice:${noticeList}">
+            <td>
+                <div th:if="${notice.noticetypeid} eq 1">
+                    Commodity Comment
+                </div>
+                <div th:if="${notice.noticetypeid} eq 2">
+                    Commodity Update
+                </div>
+            </td>
+            <td th:text="${notice.noticecontent}"></td>
+            <td th:text="${notice.noticetime}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:each="notice: ${noticeList}">
+    通知类型：
+    <div th:if="${notice.noticetypeid} eq 1">
+        <span>Commodity Comment</span><br/>
+    </div>
+    <div th:if="${notice.noticetypeid} eq 2">
+        <span>Commodity Update</span><br/>
+    </div>
+    通知内容：<span th:text="${notice.noticecontent}"></span><br/>
+    通知时间：<span th:text="${notice.noticetime}"></span><br/>
+</div>
+</div>
+</body>
+</html>

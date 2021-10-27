@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>manage my commodities</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="../../static/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/layui/css/layui.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/userInfo.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/index.css}">
+</head>
+<body class="layui-layout-body">
+
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header" style="background-color:transparent">
+        <header style="height: 60px">
+            <a th:href="@{/index}">idlecherry</a >
+            <nav>
+                <ul class="nav_links">
+                    <li><a th:href="@{/index}">Home</a ></li>
+                    <li><a th:href="@{/commodities}">Goods</a ></li>
+                    <li><a th:href="@{/contact}">Contact</a ></li>
+                </ul>
+            </nav>
+            <div class="btn-area">
+                <a th:href="@{/user/usercenter}">User Center</a >
+                <a th:href="@{/user/logout}">Log out</a >
+            </div>
+        </header>
+    </div>
+
+    <div class="layui-side bg-pink">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item">
+                    <a th:href="@{/index}">Index</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a th:href="@{/user/usercenter}"> Account setting </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a th:href="@{/user/releaseNew}"> Release New Idle </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">Manage my goods</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a th:href="@{/user/collectionManage}"> My Favorite Commodities </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a th:href="@{/user/Notice}">Message Management</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+<!--        main section-->
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Update Time</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>View</th>
+                <th>Edit</th>
+                <th>Operation</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="commodity:${myOwnCommodities}">
+                <!--/*@thymesVar id="getCommname" type="com.sydney.entity.Commodity"*/-->
+                <td th:text="${commodity.getCommname()}"></td>
+                <td th:text="${commodity.getUpdatetime()}"></td>
+                <td th:text="${commodity.getCategoryid()}"></td>
+                <td th:text="${commodity.getPrice()}"></td>
+                <td th:text="${commodity.getCommstatus() == 1 ? 'On Sale':'Sold Out'}"></td>
+                <td>
+                    <a class="layui-btn layui-btn-sm layui-btn-normal" th:href="@{/CommodityDetail?id=} + ${commodity.getCommid()}">
+                        Check it out
+                    </a>
+                </td>
+                <td>
+                    <a th:if="${commodity.getCommstatus() == 1}" class="layui-btn layui-btn-sm layui-btn-normal" th:href="@{/user/editMyCommodity/} + ${commodity.getCommid()}">Edit</a>
+
+                </td>
+                <td>
+                    <a th:if="${commodity.getCommstatus() == 1}" class="layui-btn layui-btn-sm layui-btn-danger" th:href="@{/user/offshelf/}+${commodity.getCommid()}">Pull Off Shelf</a>
+                    <a th:if="${commodity.getCommstatus() == 0}" class="layui-btn layui-btn-sm layui-btn-warm" th:href="@{/user/putOnSell/}+${commodity.getCommid()}">Put On Sell</a>
+                </td>
+                <td>
+<!--                    <div class="layui-btn-group">-->
+                        <a th:if="${commodity.getCommstatus() == 1}" class="layui-btn layui-btn-sm layui-btn-primary" >Delete</a>
+                        <a th:if="${commodity.getCommstatus() == 0}" class="layui-btn layui-btn-sm layui-btn-danger" >Delete</a>
+<!--                    </div>-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+</body>
+</html>

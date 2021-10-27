@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+<body>
+<h2>---商品详情---</h2>
+商品名称：<span th:text="${commodity.commname}"></span><br/>
+<h2>其他字段根据需求接着加</h2>
+商品拥有者：<span th:text="${commodityOwner.lastName}"></span><br/>
+联系方式：<span th:text="${commodityOwner.mobilephone}"></span><br/>
+<h2>其他字段根据需求接着加</h2>
+
+<!--商品收藏功能 首先得判断用户是否登录以及用户是否收藏了该商品。
+如果用户没登录，点击收藏按钮，自动跳转到登录页面；
+如果用户登录且没收藏该商品，点击收藏按钮可收藏，并且把收藏变成已收藏；
+如果如果用户登录且已经收藏该商品，显示已收藏
+-->
+<div th:if="${showFavoriteButtonOrNot} eq 0">
+    <a th:href="@{'/FavoriteCommodity?commid=' + ${commodity.commid}}">收藏</a>
+</div>
+
+<div th:if="${showFavoriteButtonOrNot} eq 1">
+    <a>已收藏</a>
+    <a th:href="@{'/deFavoriteCommodity?commid=' + ${commodity.commid}}">取消收藏</a>
+</div>
+
+<h2>---商品评论---</h2>
+<div th:each="comment: ${commentList}">
+    评论时间：<span th:text="${comment.commenttime}"></span><br/>
+    评论者id：<span th:text="${comment.userid}"></span><br/>
+    评论内容：<span th:text="${comment.content}"></span><br/>
+    <h2>其他字段根据需求接着加</h2>
+</div>
+<h2>---发表评论---</h2>
+<form action="PostComment" method="post">
+    商品id: <input type="text" name="commid" th:value="${commodity.commid}" readonly="readonly"><br/>
+    我的评论：<input type="text" name="comment"><br/>
+    <input type="submit" value="提交">
+</form>
+</body>
+</html>

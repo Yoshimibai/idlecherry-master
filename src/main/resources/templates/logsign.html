@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Log in and Sign up</title>
+    <link rel="stylesheet" type="text/css" th:href="@{static/css/logsignstyle.css}">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+</head>
+<body>
+<main>
+    <div class="box">
+        <div class="inner-box">
+            <div class="forms-wrap">
+                <form
+                        action="index.html"
+                        autocomplete="off"
+                        class="sign-in-form"
+                >
+                    <div class="logo">
+                        <img src="static/img/logo.png" alt="" />
+                        <h4>idlecherry</h4>
+                    </div>
+
+                    <div class="heading">
+                        <h2>Welcom Back</h2>
+                        <h6>Not regitered yet?</h6>
+                        <a href="javascript:;" class="toggle">Sign up</a>
+                    </div>
+
+                    <!-- Log In -->
+                    <div class="actual-form">
+                        <div class="input-wrap">
+                            <input
+                                    type="email"
+                                    id="log-email"
+                                    min-length="5"
+                                    class="input-field"
+                                    autocomplete="off"
+                                    required
+                            />
+                            <label>Email</label>
+                        </div>
+
+                        <div class="input-wrap">
+                            <input
+                                    type="password"
+                                    id="log-password"
+                                    min-length="5"
+                                    class="input-field"
+                                    autocomplete="off"
+                                    required
+                            />
+                            <label>Password</label>
+                        </div>
+
+                        <button type="button" class="sign-btn" id="log-in-btn" onclick="login()">
+                            Login
+                        </button>
+
+                        <p class="text">
+                            Forgotten your password or your login
+                            details?
+                            <a href="#">Get help</a> signing in
+                        </p>
+                    </div>
+                </form>
+
+                <!-- sign up -->
+                <form
+                        action="submit"
+                        autocomplete="off"
+                        class="sign-up-form"
+                >
+                    <div class="logo">
+                        <img src="static/img/logo.png" alt="" />
+                        <h4>idlecherry</h4>
+                    </div>
+
+                    <div class="heading">
+                        <h2>Get Started</h2>
+                        <h6>Already have an account?</h6>
+                        <a href="jacascript:;" class="toggle">Log in</a>
+                    </div>
+
+                    <div class="actual-form">
+                        <div class="input-wrap">
+                            <input
+                                    type="email"
+                                    name="email"
+                                    id="sign-email"
+                                    min-length="5"
+                                    class="input-field"
+                                    autocomplete="off"
+                                    required
+                            />
+                            <label>Email</label>
+                        </div>
+
+                        <div class="input-wrap">
+                            <input
+                                    type="text"
+                                    name="firstName"
+                                    id="sign-firstname"
+                                    min-length="5"
+                                    class="input-field"
+                                    autocomplete="off"
+                                    required
+                            />
+                            <label>First Name</label>
+                        </div>
+
+                        <div class="input-wrap">
+                            <input
+                                    type="text"
+                                    name="lastName"
+                                    id="sign-lastname"
+                                    min-length="5"
+                                    class="input-field"
+                                    autocomplete="off"
+                                    required
+                            />
+                            <label>Last Name</label>
+                        </div>
+
+                        <div class="input-wrap">
+                            <input
+                                    type="password"
+                                    id="sign-password"
+                                    name="password"
+                                    min-length="5"
+                                    class="input-field"
+                                    autocomplete="off"
+                                    required
+                            />
+                            <label>Password</label>
+                        </div>
+
+
+                        <button type="button" class="sign-btn" id="sign-up-btn" onclick="register()">
+                            Sign Up
+                        </button>
+
+
+                        <p class="text">
+                            By signing up, I agree to the
+                            <a href="#">Terms of Services</a> and
+                            <a href="#">Privacy Policy</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- -->
+            <div class="carousel">
+                <div class="images-wrapper">
+                    <img
+                            src="static/img/login_main.jpg"
+                            class="image img-1 show"
+                            alt=""
+                    />
+                </div>
+                <div class="text-slider">
+                    <div class="text-wrap">
+                        <div class="text-group">
+                            <h2>Exchange what you have</h2>
+                            <h2>Get what your wants</h2>
+                            <h2>Deal with trusted students</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script th:src="@{/static/js/logsign.js}"></script>
+
+</body>
+</html>

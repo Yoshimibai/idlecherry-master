@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>UserCenter</title>
+        <link href="/css/bootstrap.css" rel="stylesheet">
+        <link href="../../static/layui/css/layui.css">
+        <link rel="stylesheet" type="text/css" th:href="@{/static/layui/css/layui.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/userInfo.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/index.css}">
+
+    </head>
+
+    <body class="layui-layout-body">
+
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header" style="background-color:transparent">
+            <header style="height: 60px">
+                <a th:href="@{/index}">idlecherry</a >
+                <nav>
+                    <ul class="nav_links">
+                        <li><a th:href="@{/index}">Home</a ></li>
+                        <li><a th:href="@{/commodities}">Goods</a ></li>
+                        <li><a th:href="@{/contact}">Contact</a ></li>
+                    </ul>
+                </nav>
+                <div class="btn-area">
+                    <a th:href="@{/user/usercenter}">User Center</a >
+                    <a th:href="@{/user/logout}">Log out</a >
+                </div>
+            </header>
+        </div>
+
+
+    <div class="layui-side bg-pink">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item">
+                        <a th:href="@{/index}">Index</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="">Account setting</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a th:href="@{/user/releaseNew}"> Release New Idle</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a th:href="@{/user/commodityManage}">Manage my goods</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a th:href="@{/user/collectionManage}">My Favorite Commodities</a>
+                </li>
+                <li class="layui-nav-item">
+                        <a th:href="@{/user/Notice}">Message Management</a>
+                    </li> </ul>
+                    <img class="layui-nav-img" th:src="${session.user.getProfile()}", style="margin-bottom:20px;margin-left:20px;margin-top:30px;width:160px;height:160px"/>
+
+            </div>
+        </div>
+        <div class="layui-body">
+            <div>
+                <form th:action="@{/user/update}" method="post" enctype="multipart/form-data" class="layui-form">
+                    <input type="hidden" th:value="${session.user.id}" name="id">
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">Change Avatar</label>
+                        <div class="layui-input-block">
+                            <input class="layui-btn" type="file" name="file" file>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">Email</label>
+                        <div class="layui-input-block">
+                            <input readonly="readonly" class="layui-input" th:value="${session.user.email}" type="text" name="email" lay-verify="required">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">FirstName</label>
+                        <div class="layui-input-block">
+                            <input readonly="readonly" class="layui-input" th:value="${session.user.firstName}" type="text" name="firstName" lay-verify="required">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">LastName</label>
+                        <div class="layui-input-block">
+                            <input readonly="readonly" class="layui-input" th:value="${session.user.lastName}" type="text" name="lastName" lay-verify="required">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">Password</label>
+                        <div class="layui-input-block">
+                            <input class="layui-input" type="password" name="password" lay-verify="required" th:value="${session.user.password}">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">Mobile phone</label>
+                        <div class="layui-input-block">
+                            <input type="text" th:value="${session.user.mobilephone}" name="mobilephone" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">Gender</label>
+                        <div class="layui-input-block" >
+                            <input type="radio" id="male" name="gender" value="male" title="Male" th:checked="${session.user.gender eq 'male' }" >
+                            <input type="radio" id="female" name="gender" value="female" title="Female" th:checked="${session.user.gender eq 'female' }">
+                            <input type="radio" id="secret" name="gender" value="secret" title="Secret" th:checked="${session.user.gender eq 'secret' }">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label" >University</label>
+                        <div class="layui-input-block" style="width:240px">
+                            <select name="university">
+                                <option value="" >Choose your university</option>
+                                <option th:selected="${session.user.school eq 'ACU'}" value="ACU">Australian Catholic University</option>
+                                <option th:selected="${session.user.school eq 'MU'}" value="MU">Macquarie University</option>
+                                <option th:selected="${session.user.school eq 'UNSW'}" value="UNSW">University of New South Wales</option>
+                                <option th:selected="${session.user.school eq 'USYD'}" value="USYD">University of Sydney</option>
+                                <option th:selected="${session.user.school eq 'UTS'}" value="UTS">University of Technology Sydney</option>
+                                <option th:selected="${session.user.school eq 'WSU'}" value="WSU">Western Sydney University</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit type="submit">submit changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        </div>
+<script th:src="@{/static/layui/layui.all.js}"></script>
+<script>
+    layui.use('form', function() {
+        var form = layui.form;
+        form.render();
+    });
+
+</script>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sydney.dao.UserDao">
+
+    <!-- findByEmail -->
+    <select id="findByEmail" parameterType="String" resultType="User">
+        select id, email, firstName, lastName, password, school, mobilephone, gender, startYear, profile, signature, faculty from `user`
+        where email = #{email}
+    </select>
+
+    <!-- findById -->
+    <select id="findById" parameterType="Integer" resultType="User">
+        select id, email, firstName, lastName, password, school, mobilephone, gender, startYear, profile, signature, faculty from `user`
+        where id = #{userid}
+    </select>
+    <!-- save -->
+    <insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        insert into user (id, email, firstName, lastName, password,profile) values(#{id}, #{email}, #{firstName}, #{lastName}, #{password}, #{profile})
+    </insert>
+
+    <update id="update" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        update `user`
+        set `firstName`=#{firstName},`password`=#{password},
+                          `lastName`=#{lastName},`email`=#{email},
+                          `mobilephone`=#{mobilephone}, `gender`=#{gender},
+                            `school`=#{school}
+        where `id`= #{id}
+    </update>
+
+    <update id="updateImg" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        update user
+        set profile= #{profile}
+        where id = #{id}
+    </update>
+
+
+
+
+</mapper>

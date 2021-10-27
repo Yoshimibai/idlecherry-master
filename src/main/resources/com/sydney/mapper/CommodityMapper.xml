@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sydney.dao.CommodityMapper">
+  <resultMap id="BaseResultMap" type="com.sydney.entity.Commodity">
+    <id column="commID" jdbcType="INTEGER" property="commid" />
+    <result column="commName" jdbcType="VARCHAR" property="commname" />
+    <result column="commDesc" jdbcType="VARCHAR" property="commdesc" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="updateTime" jdbcType="VARCHAR" property="updatetime" />
+    <result column="commStatus" jdbcType="INTEGER" property="commstatus" />
+    <result column="categoryID" jdbcType="INTEGER" property="categoryid" />
+    <result column="userID" jdbcType="INTEGER" property="userid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    commID, commName, commDesc, price, image, updateTime, commStatus, categoryID, userID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from commodity
+    where commID = #{commid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from commodity
+    where commID = #{commid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sydney.entity.Commodity">
+    insert into commodity (commID, commName, commDesc, 
+      price, image, updateTime, 
+      commStatus, categoryID, userID
+      )
+    values (#{commid,jdbcType=INTEGER}, #{commname,jdbcType=VARCHAR}, #{commdesc,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{image,jdbcType=VARCHAR}, #{updatetime,jdbcType=VARCHAR}, 
+      #{commstatus,jdbcType=INTEGER}, #{categoryid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sydney.entity.Commodity">
+    insert into commodity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commid != null">
+        commID,
+      </if>
+      <if test="commname != null">
+        commName,
+      </if>
+      <if test="commdesc != null">
+        commDesc,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+      <if test="commstatus != null">
+        commStatus,
+      </if>
+      <if test="categoryid != null">
+        categoryID,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commid != null">
+        #{commid,jdbcType=INTEGER},
+      </if>
+      <if test="commname != null">
+        #{commname,jdbcType=VARCHAR},
+      </if>
+      <if test="commdesc != null">
+        #{commdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="commstatus != null">
+        #{commstatus,jdbcType=INTEGER},
+      </if>
+      <if test="categoryid != null">
+        #{categoryid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sydney.entity.Commodity">
+    update commodity
+    <set>
+      <if test="commname != null">
+        commName = #{commname,jdbcType=VARCHAR},
+      </if>
+      <if test="commdesc != null">
+        commDesc = #{commdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        updateTime = #{updatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="commstatus != null">
+        commStatus = #{commstatus,jdbcType=INTEGER},
+      </if>
+      <if test="categoryid != null">
+        categoryID = #{categoryid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where commID = #{commid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sydney.entity.Commodity">
+    update commodity
+    set commName = #{commname,jdbcType=VARCHAR},
+      commDesc = #{commdesc,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      image = #{image,jdbcType=VARCHAR},
+      updateTime = #{updatetime,jdbcType=VARCHAR},
+      commStatus = #{commstatus,jdbcType=INTEGER},
+      categoryID = #{categoryid,jdbcType=INTEGER},
+      userID = #{userid,jdbcType=INTEGER}
+    where commID = #{commid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from commodity where userID = #{userid}
+  </select>
+  
+  <update id="putOnSaleById" parameterType="java.lang.Integer" >
+    update commodity set commStatus = 1
+    where commID = #{commID}
+  </update>
+
+  <update id="pullOffShelvesById" parameterType="java.lang.Integer">
+    update commodity set commStatus = 0
+    where commID = #{commID}
+  </update>
+
+  <!-- register -->
+  <insert id="register" parameterType="com.sydney.entity.Commodity">
+    insert into commodity (commID, commName, commDesc, price, image, updateTime, commStatus, categoryID, userID) values(#{commid}, #{commname}, #{commdesc}, #{price}, #{image}, #{updatetime}, #{commstatus},  #{categoryid}, #{userid})
+  </insert>
+
+  <select id="findLatestCommodity" resultMap="BaseResultMap">
+    select * from commodity
+    order by  STR_TO_DATE(updateTime, '%Y-%m-%d %H:%i:%s') desc
+  </select>
+
+  <select id="getAllCommodities" resultMap="BaseResultMap">
+    select * from commodity where commStatus = 1 order by commName
+  </select>
+
+  <select id="getCommodityByCategory" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from commodity where categoryID = #{categoryID} and commStatus = 1 order by commID desc
+  </select>
+
+  <select id="getCommodityBySearch" parameterType="String" resultMap="BaseResultMap">
+    select * from commodity where (categoryID in (select categoryID from commodity_category
+                                                  where categoryName like concat('%',#{searchC},'%'))
+      or commName like concat('%',#{searchC},'%'))
+                              and commStatus = 1 order by commID desc
+  </select>
+
+  <select id="getCommodityByName" parameterType="String" resultType="com.sydney.entity.Commodity">
+    select * from commodity where commName = #{commName} and commStatus = 1 order by commID desc
+  </select>
+
+  <select id="getUserIdByCommId" parameterType="java.lang.Integer">
+    select userID from commodity where commID = #{commID}
+  </select>
+
+</mapper>

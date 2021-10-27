@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>iddlecherry Main Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{static/css/index.css}">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+</head>
+<body>
+<!--Old Content -->
+<!--<h1>Redirect to index.html successfully</h1>-->
+<!--<h3>欢迎<span th:text="${session.user.getFirstName()}"></span></h3>-->
+
+<!--<span>-->
+<!--    <a th:text="看看 +${session.user.getFirstName()}+ 的账户" th:href="@{/user/usercenter/} + ${session.user.getId}" class="layui-btn layui-btn-sm"></a>-->
+<!--    <a th:href="@{/user/logout}" class="layui-btn layui-btn-sm">退出登录</a>-->
+<!--</span>-->
+
+<!--New Page-->
+<div id="main-page">
+    <header>
+        <a th:href="@{/index}">idlecherry</a>
+        <nav>
+            <ul class="nav_links">
+                <li><a th:href="@{/index}">Home</a></li>
+                <li><a th:href="@{/commodities}">Goods</a></li>
+                <li><a th:href="@{/contact}">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="btn-area">
+            <a th:href="@{/user/usercenter}">User Center</a>
+            <a th:href="@{/user/logout}">Log out</a>
+        </div>
+    </header>
+
+    <!--Weather Display-->
+
+    <div id="displayWeather">
+
+    </div>
+
+
+    <!-- introduction text start -->
+    <section class="presentation">
+        <div class="introduction">
+            <div class="intro-text">
+                <h1>Laptop for the future</h1>
+                <p>
+                    The new 14 inch bezeless display oferring a 4k
+                    display
+                    <br />with touch screen.
+                </p>
+            </div>
+            <div class="cta">
+                <button class="cta-select">100% Safe</button>
+                <button class="cta-add">Explore Now</button>
+            </div>
+        </div>
+
+        <div class="images">
+            <img class="products active" src="static/img/book-1.png" alt="" />
+            <img class="products" src="static/img/book-2.png" alt="" />
+            <img class="products" src="static/img/book-3.png" alt="" />
+        </div>
+
+        <button type="button" class="left" onclick="prev()"><</button>
+        <button type="button" class="right" onclick="next()">></button>
+    </section>
+    <!-- introduction text end -->
+
+    <!-- introduction background -->
+    <img class="big-circle" src="static/img/big-eclipse.svg" alt="" />
+    <img class="medium-circle" src="static/img/mid-eclipse.svg" alt="" />
+    <img class="small-circle" src="static/img/small-eclipse.svg" alt="" />
+    <!-- introduction background end-->
+
+    <!-- Newest Posted start -->
+    <section class="new-post-section">
+        <h2 class="section-title">NEW POSTED</h2>
+        <a th:href="@{/commodities}" class="section-all">View All</a>
+
+        <div class="cards">
+            <!-- 每个新商品都是一个card元素包起来 -->
+            <!-- 可能需要遍历最新postlist取前6个最新商品，需要替换checkdetails的链接，title名字，和price -->
+
+            <div class="card" id="card">
+                <img th:src="${commodities.get(0).getImage()}" alt="" />
+                <div class="card-effect">
+                    <a th:href="@{/CommodityDetail?id=} + ${commodities.get(0).getCommid()}">Check details</a>
+                </div>
+                <div class="card-info">
+                    <h4 class="title" th:text="${commodities.get(0).getCommname()}"></h4>
+                    <h4 class="price" th:text="${commodities.get(0).getPrice()}"></h4>
+                </div>
+            </div>
+
+            <div class="card" id="card">
+                <img th:src="${commodities.get(1).getImage()}" alt="" />
+                <div class="card-effect">
+                    <a th:href="@{/CommodityDetail?id=} + ${commodities.get(1).getCommid()}">Check details</a>
+                </div>
+                <div class="card-info">
+                    <h4 class="title" th:text="${commodities.get(1).getCommname()}"></h4>
+                    <h4 class="price" th:text="${commodities.get(1).getPrice()}"></h4>
+                </div>
+            </div>
+
+            <div class="card" id="card">
+                <img th:src="${commodities.get(2).getImage()}" alt="" />
+                <div class="card-effect">
+                    <a th:href="@{/CommodityDetail?id=} + ${commodities.get(2).getCommid()}">Check details</a>
+                </div>
+                <div class="card-info">
+                    <h4 class="title" th:text="${commodities.get(2).getCommname()}"></h4>
+                    <h4 class="price" th:text="${commodities.get(2).getPrice()}"></h4>
+                </div>
+            </div>
+
+            <div class="card" id="card">
+                <img th:src="${commodities.get(3).getImage()}" alt="" />
+                <div class="card-effect">
+                    <a th:href="@{/CommodityDetail?id=} + ${commodities.get(3).getCommid()}">Check details</a>
+                </div>
+                <div class="card-info">
+                    <h4 class="title" th:text="${commodities.get(3).getCommname()}"></h4>
+                    <h4 class="price" th:text="${commodities.get(3).getPrice()}"></h4>
+                </div>
+            </div>
+
+            <div class="card" id="card">
+                <img th:src="${commodities.get(4).getImage()}" alt="" />
+                <div class="card-effect">
+                    <a th:href="@{/CommodityDetail?id=} + ${commodities.get(4).getCommid()}">Check details</a>
+                </div>
+                <div class="card-info">
+                    <h4 class="title" th:text="${commodities.get(4).getCommname()}"></h4>
+                    <h4 class="price" th:text="${commodities.get(4).getPrice()}"></h4>
+                </div>
+            </div>
+
+            <div class="card" id="card">
+                <img th:src="${commodities.get(5).getImage()}" alt="" />
+                <div class="card-effect">
+                    <a th:href="@{/CommodityDetail?id=} + ${commodities.get(5).getCommid()}">Check details</a>
+                </div>
+                <div class="card-info">
+                    <h4 class="title" th:text="${commodities.get(5).getCommname()}"></h4>
+                    <h4 class="price" th:text="${commodities.get(5).getPrice()}"></h4>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Newest Posted end -->
+
+    <!-- Footer Content start -->
+    <footer>
+        <div class="footer-content">
+            <h3>iddlecherry Enterprise</h3>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Dolorem unde distinctio voluptates alias quasi.
+            </p>
+            <ul class="socials">
+                <li>
+                    <i class="fa fa-facebook-f"></i>
+                </li>
+                <li>
+                    <i class="fa fa-twitter"></i>
+                </li>
+                <li>
+                    <i class="fa fa-google-plus"></i>
+                </li>
+                <li>
+                    <i class="fa fa-youtube"></i>
+                </li>
+                <li>
+                    <i class="fa fa-linkedin-square"></i>
+                </li>
+            </ul>
+        </div>
+        <div class="footer-bottom">
+            <p>
+                copy &copy;2021 iddlecherry. designed by
+                <span>Sally</span>
+            </p>
+        </div>
+    </footer>
+    <!-- Footer Content end -->
+</div>
+
+<script th:src="@{/static/js/main.js}"></script>
+
+</body>
+</html>
